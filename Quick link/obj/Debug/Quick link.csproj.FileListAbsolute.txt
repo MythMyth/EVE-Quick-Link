@@ -1,0 +1,13 @@
+C:\Users\Myth\source\repos\Quick link\Quick link\bin\Debug\Quick link.exe.config
+C:\Users\Myth\source\repos\Quick link\Quick link\bin\Debug\Quick link.exe
+C:\Users\Myth\source\repos\Quick link\Quick link\bin\Debug\Quick link.pdb
+C:\Users\Myth\source\repos\Quick link\Quick link\obj\Debug\Quick link.csproj.AssemblyReference.cache
+C:\Users\Myth\source\repos\Quick link\Quick link\obj\Debug\Quick_link.Form1.resources
+C:\Users\Myth\source\repos\Quick link\Quick link\obj\Debug\Quick_link.Properties.Resources.resources
+C:\Users\Myth\source\repos\Quick link\Quick link\obj\Debug\Quick link.csproj.GenerateResource.cache
+C:\Users\Myth\source\repos\Quick link\Quick link\obj\Debug\Quick link.csproj.CoreCompileInputs.cache
+C:\Users\Myth\source\repos\Quick link\Quick link\obj\Debug\Quick link.exe
+C:\Users\Myth\source\repos\Quick link\Quick link\obj\Debug\Quick link.pdb
+C:\Users\Myth\source\repos\Quick link\Quick link\bin\Debug\Microsoft.Toolkit.Uwp.Notifications.dll
+C:\Users\Myth\source\repos\Quick link\Quick link\bin\Debug\System.ValueTuple.dll
+C:\Users\Myth\source\repos\Quick link\Quick link\bin\Debug\Microsoft.Toolkit.Uwp.Notifications.pdb

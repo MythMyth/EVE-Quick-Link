@@ -1,0 +1,57 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\Myth\\source\\repos\\Quick link\\Quick link\\Quick link.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\Myth\\source\\repos\\Quick link\\Quick link\\Quick link.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Myth\\source\\repos\\Quick link\\Quick link\\Quick link.csproj",
+        "projectName": "Quick link",
+        "projectPath": "C:\\Users\\Myth\\source\\repos\\Quick link\\Quick link\\Quick link.csproj",
+        "packagesPath": "C:\\Users\\Myth\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Myth\\source\\repos\\Quick link\\Quick link\\obj\\",
+        "projectStyle": "PackageReference",
+        "skipContentFileWrite": true,
+        "configFilePaths": [
+          "C:\\Users\\Myth\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net472"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net472": {
+            "projectReferences": {}
+          }
+        }
+      },
+      "frameworks": {
+        "net472": {
+          "dependencies": {
+            "Microsoft.Toolkit.Uwp.Notifications": {
+              "target": "Package",
+              "version": "[7.1.2, )"
+            }
+          }
+        }
+      },
+      "runtimes": {
+        "win": {
+          "#import": []
+        },
+        "win-x64": {
+          "#import": []
+        },
+        "win-x86": {
+          "#import": []
+        }
+      }
+    }
+  }
+}
