@@ -15,39 +15,28 @@ using System.Windows.Forms;
 
 namespace Quick_link
 {
-    public partial class Form1 : Form
+    public partial class Main : Form
     {
         [DllImport("user32.dll")]
         public static extern bool RegisterHotKey(IntPtr hWnd, int id, int fsModifiers, int vlc);
         [DllImport("user32.dll")]
         public static extern bool UnregisterHotKey(IntPtr hWnd, int id);
         const string root_url = "https://dscan.info";
+        const string get_char_id_url = "https://esi.evetech.net/latest/search/";
         private Mutex mutex;
-        int MYACTION_HOTKEY_ID = 1;
+        private Mutex zmutex;
+        const int GET_DSCAN = 1, GET_ZKILL = 2;
         bool running;
-        public Form1()
+        bool zchecking;
+        public Main()
         {
             InitializeComponent();
             mutex = new Mutex();
+            zmutex = new Mutex();
             running = false;
-            RegisterHotKey(this.Handle, MYACTION_HOTKEY_ID, 6, (int)(Keys.D));
-        }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-            
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            
-            
-
-        }
-
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-
+            zchecking = false;
+            RegisterHotKey(this.Handle, GET_DSCAN, 6, (int)Keys.D);
+            RegisterHotKey(this.Handle, GET_ZKILL, 6, (int)Keys.Z);
         }
 
         private async Task GetLink(string content)
@@ -123,7 +112,6 @@ namespace Quick_link
 
             HttpClient http_client = new HttpClient();
             string query_link = root_url + pageContent.Substring(action_start, action_end - action_start);
-            label1.Text = query_link;
             var data = new Dictionary<string, string> {
                 { "paste", content}
             };
@@ -140,6 +128,39 @@ namespace Quick_link
             mutex.ReleaseMutex();
         }
 
+        private async Task GetZkill(string charname)
+        {
+            HttpClient http_client = new HttpClient();
+            string request_url = get_char_id_url + "?";
+            request_url += "categories=character&";
+            request_url += "datasource=tranquility&";
+            request_url += "language=en&";
+            request_url += "search=" + charname.Trim().Replace(" ", "%20") + "&";
+            request_url += "strict=true";
+
+            HttpResponseMessage response = await http_client.GetAsync(request_url);
+
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                string result = await response.Content.ReadAsStringAsync();
+                result = result.Replace("{", "").Replace("}", "").Replace("]", "");
+                if(result.Split('[').Length < 2)
+                {
+                    //Not found
+                } else
+                {
+                    result = result.Split('[')[1].Trim();
+                    Zkill zkill = new Zkill();
+                    zkill.SetCharId(charname, result);
+                    zkill.Show();
+                }
+
+            } else
+            {
+                //Request failed
+            }
+
+        }
         void ShowSuccees(string link)
         {
             ToastContentBuilder builder = new ToastContentBuilder();
@@ -151,18 +172,15 @@ namespace Quick_link
 
         protected override void WndProc(ref Message m)
         {
-            if (m.Msg == 0x0312 && m.WParam.ToInt32() == MYACTION_HOTKEY_ID)
+            if (m.Msg == 0x0312)
             {
-                // My hotkey has been typed
-
-                // Do what you want here
-                // ...
-                GetLink(Clipboard.GetText());
+                if (m.WParam.ToInt32() == GET_DSCAN) GetLink(Clipboard.GetText());
+                else if(m.WParam.ToInt32() == GET_ZKILL) GetZkill(Clipboard.GetText());
             }
             base.WndProc(ref m);
         }
 
-        private void Form1_Resize(object sender, EventArgs e)
+        private void Main_Resize(object sender, EventArgs e)
         {
             if(FormWindowState.Minimized == WindowState)
             {
