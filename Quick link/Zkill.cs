@@ -26,16 +26,29 @@ namespace Quick_link
         {
             charId = id;
             this.charname = charname;
+            string url = root_url + charId;
+            zkilllink.Text = url;
         }
 
         private void Zkill_Shown(object sender, EventArgs e)
         {
             //ActiveForm.Text = charname + " - " + charId;
+            try
+            {
+                WebClient client = new WebClient();
+                client.Headers.Add("user-agent", "quick-link");
+                string url = root_url + charId;
+                string pageContent = client.DownloadString(url);
+            }
+            catch(WebException ex)
+            {
 
-            WebClient client = new WebClient();
-            string url = root_url + charId;
-            string pageContent = client.DownloadString(url);
-            textBox1.Text = pageContent;
+            }
+        }
+
+        private void zkilllink_MouseClick(object sender, MouseEventArgs e)
+        {
+            System.Diagnostics.Process.Start(zkilllink.Text);
         }
     }
 }

@@ -29,25 +29,26 @@ namespace Quick_link
         /// </summary>
         private void InitializeComponent()
         {
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.zkilllink = new System.Windows.Forms.LinkLabel();
             this.SuspendLayout();
             // 
-            // textBox1
+            // zkilllink
             // 
-            this.textBox1.Location = new System.Drawing.Point(13, 153);
-            this.textBox1.MaxLength = 10000000;
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.textBox1.Size = new System.Drawing.Size(849, 514);
-            this.textBox1.TabIndex = 0;
+            this.zkilllink.AutoSize = true;
+            this.zkilllink.Location = new System.Drawing.Point(13, 13);
+            this.zkilllink.Name = "zkilllink";
+            this.zkilllink.Size = new System.Drawing.Size(55, 13);
+            this.zkilllink.TabIndex = 0;
+            this.zkilllink.TabStop = true;
+            this.zkilllink.Text = "linkLabel1";
+            this.zkilllink.MouseClick += new System.Windows.Forms.MouseEventHandler(this.zkilllink_MouseClick);
             // 
             // Zkill
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(874, 679);
-            this.Controls.Add(this.textBox1);
+            this.ClientSize = new System.Drawing.Size(666, 679);
+            this.Controls.Add(this.zkilllink);
             this.Name = "Zkill";
             this.Text = "Zkill";
             this.Shown += new System.EventHandler(this.Zkill_Shown);
@@ -58,6 +59,6 @@ namespace Quick_link
 
         #endregion
 
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.LinkLabel zkilllink;
     }
 }

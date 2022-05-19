@@ -150,6 +150,9 @@ namespace Quick_link
                 } else
                 {
                     result = result.Split('[')[1].Trim();
+                    //System.Diagnostics.Process.Start("https://zkillboard.com/character/" + result);
+
+                    
                     Zkill zkill = new Zkill();
                     zkill.SetCharId(charname, result);
                     zkill.Show();
@@ -159,6 +162,8 @@ namespace Quick_link
             {
                 //Request failed
             }
+
+            
 
         }
         void ShowSuccees(string link)
