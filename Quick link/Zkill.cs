@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HtmlAgilityPack;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -28,22 +29,47 @@ namespace Quick_link
             this.charname = charname;
             string url = root_url + charId;
             zkilllink.Text = url;
+            try
+            {
+                WebClient client = new WebClient();
+                client.Headers.Add("user-agent", "quick-link");
+                string pageContent = client.DownloadString(url);
+                HtmlAgilityPack.HtmlDocument htmldoc = new HtmlAgilityPack.HtmlDocument();
+                textBox1.Text = pageContent;
+                htmldoc.LoadHtml(pageContent);
+                HtmlNodeCollection dangerous = htmldoc.DocumentNode.SelectNodes("//table[@class='table table-condensed alltime-ranks']//div[@class='progress-bar progress-bar-danger']");
+                dangerousBar.Value = int.Parse(dangerous[0].Attributes["aria-valuenow"].Value);
+                gangComp.Value = int.Parse(dangerous[1].Attributes["aria-valuenow"].Value);
+                getKillmailList(htmldoc);
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+        private void getKillmailList(HtmlAgilityPack.HtmlDocument htmldoc)
+        {
+            HtmlNodeCollection killmailNode = htmldoc.DocumentNode.SelectNodes("//tbody[@id='killmailstobdy']");
+            int len = killmailNode.Count;
+            for(int i = 0; i < len; i++)
+            {
+                HtmlNode currNode = killmailNode[i];
+                if (currNode.Name != "tr") continue;
+                if(currNode.Attributes["class"].Value.Contains("tr-date"))
+                {
+
+                } else if(currNode.Attributes["class"].Value.Contains("killListRow"))
+                {
+                    
+                }
+            }
         }
 
         private void Zkill_Shown(object sender, EventArgs e)
         {
             //ActiveForm.Text = charname + " - " + charId;
-            try
-            {
-                WebClient client = new WebClient();
-                client.Headers.Add("user-agent", "quick-link");
-                string url = root_url + charId;
-                string pageContent = client.DownloadString(url);
-            }
-            catch(WebException ex)
-            {
-
-            }
+            
         }
 
         private void zkilllink_MouseClick(object sender, MouseEventArgs e)
