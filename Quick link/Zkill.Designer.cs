@@ -32,7 +32,11 @@ namespace Quick_link
             this.zkilllink = new System.Windows.Forms.LinkLabel();
             this.dangerousBar = new System.Windows.Forms.ProgressBar();
             this.gangComp = new System.Windows.Forms.ProgressBar();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.killlist = new System.Windows.Forms.ListView();
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.SuspendLayout();
             // 
             // zkilllink
@@ -64,21 +68,46 @@ namespace Quick_link
             this.gangComp.Size = new System.Drawing.Size(223, 23);
             this.gangComp.TabIndex = 1;
             // 
-            // textBox1
+            // killlist
             // 
-            this.textBox1.Location = new System.Drawing.Point(16, 102);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.textBox1.Size = new System.Drawing.Size(638, 293);
-            this.textBox1.TabIndex = 2;
+            this.killlist.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader1,
+            this.columnHeader2,
+            this.columnHeader3,
+            this.columnHeader4});
+            this.killlist.FullRowSelect = true;
+            this.killlist.GridLines = true;
+            this.killlist.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.killlist.HideSelection = false;
+            this.killlist.Location = new System.Drawing.Point(16, 97);
+            this.killlist.Name = "killlist";
+            this.killlist.Size = new System.Drawing.Size(557, 379);
+            this.killlist.TabIndex = 2;
+            this.killlist.UseCompatibleStateImageBehavior = false;
+            this.killlist.View = System.Windows.Forms.View.Details;
+            // 
+            // columnHeader1
+            // 
+            this.columnHeader1.Text = "Ship";
+            // 
+            // columnHeader2
+            // 
+            this.columnHeader2.Text = "System";
+            // 
+            // columnHeader3
+            // 
+            this.columnHeader3.Text = "Victim";
+            // 
+            // columnHeader4
+            // 
+            this.columnHeader4.Text = "Final blow";
             // 
             // Zkill
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(666, 679);
-            this.Controls.Add(this.textBox1);
+            this.ClientSize = new System.Drawing.Size(591, 486);
+            this.Controls.Add(this.killlist);
             this.Controls.Add(this.gangComp);
             this.Controls.Add(this.dangerousBar);
             this.Controls.Add(this.zkilllink);
@@ -95,6 +124,10 @@ namespace Quick_link
         private System.Windows.Forms.LinkLabel zkilllink;
         private System.Windows.Forms.ProgressBar dangerousBar;
         private System.Windows.Forms.ProgressBar gangComp;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.ListView killlist;
+        private System.Windows.Forms.ColumnHeader columnHeader1;
+        private System.Windows.Forms.ColumnHeader columnHeader2;
+        private System.Windows.Forms.ColumnHeader columnHeader3;
+        private System.Windows.Forms.ColumnHeader columnHeader4;
     }
 }
