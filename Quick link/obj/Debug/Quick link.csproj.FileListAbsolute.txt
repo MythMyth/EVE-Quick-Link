@@ -14,3 +14,4 @@ C:\Users\Myth\source\repos\Quick link\Quick link\obj\Debug\Quick_link.Main.resou
 C:\Users\Myth\source\repos\Quick link\Quick link\obj\Debug\Quick_link.Zkill.resources
 C:\Users\Myth\source\repos\Quick link\Quick link\bin\Debug\HtmlAgilityPack.dll
 C:\Users\Myth\source\repos\Quick link\Quick link\bin\Debug\HtmlAgilityPack.pdb
+C:\Users\Myth\source\repos\Quick link\Quick link\obj\Debug\Quick_link.DScan.resources

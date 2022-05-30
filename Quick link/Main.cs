@@ -37,6 +37,26 @@ namespace Quick_link
             zchecking = false;
             RegisterHotKey(this.Handle, GET_DSCAN, 6, (int)Keys.D);
             RegisterHotKey(this.Handle, GET_ZKILL, 6, (int)Keys.Z);
+            MakeContextMenu();
+             WindowState = FormWindowState.Minimized;
+            Hide();
+        }
+
+        void MakeContextMenu()
+        {
+            MenuItem exit = new MenuItem();
+            exit.Text = "Exit";
+            exit.Index = 0;
+            exit.Click += new EventHandler(this.exit_click);
+
+            ContextMenu menu = new ContextMenu();
+            menu.MenuItems.Add(exit);
+            notifyIcon1.ContextMenu = menu;
+        }
+
+        void exit_click(object sender, EventArgs arg)
+        {
+            this.Close();
         }
 
         private async Task GetLink(string content)
@@ -168,6 +188,9 @@ namespace Quick_link
         }
         void ShowSuccees(string link)
         {
+            DScan ds = new DScan();
+            ds.SetLink(link);
+            ds.Show();
             ToastContentBuilder builder = new ToastContentBuilder();
             builder.AddArgument("link", link);
             builder.AddText("Link accquired!");
