@@ -61,12 +61,14 @@ namespace Quick_link
 
         private async Task GetLink(string content)
         {
+            Log.GetInstance().DebugLog("Get link hit");
             if (running) return;
             mutex.WaitOne();
             running = true;
             WebClient client = new WebClient();
             string pageContent = client.DownloadString(root_url);
             int size = pageContent.Length;
+            Log.GetInstance().DebugLog("Get content " + size + " bytes");
             int startOfForm = -1, endOfForm = -1;
             for(int i = 0; i < size; i++)
             {
@@ -79,6 +81,7 @@ namespace Quick_link
             if(startOfForm == -1)
             {
                 //Error
+                Log.GetInstance().DebugLog("Not found <form");
                 running = false;
                 mutex.ReleaseMutex();
                 return;
@@ -93,6 +96,7 @@ namespace Quick_link
             if(endOfForm == -1)
             {
                 //Error
+                Log.GetInstance().DebugLog("Not found end form");
                 running = false;
                 mutex.ReleaseMutex();
                 return;
@@ -125,6 +129,7 @@ namespace Quick_link
             if(action_end == -1 || action_start == -1)
             {
                 //Error
+                Log.GetInstance().DebugLog("Action not found");
                 running = false;
                 mutex.ReleaseMutex();
                 return;
@@ -143,6 +148,9 @@ namespace Quick_link
             if(res_arr[0] == "OK") {
                 Clipboard.SetText(root_url + "/v/" + res_arr[1]);
                 ShowSuccees(root_url + "/v/" + res_arr[1]);
+            } else
+            {
+                Log.GetInstance().DebugLog("Get link failed");
             }
             running = false;
             mutex.ReleaseMutex();

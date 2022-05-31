@@ -13,6 +13,5 @@ C:\Users\Myth\source\repos\Quick link\Quick link\obj\Release\Quick_link.Properti
 C:\Users\Myth\source\repos\Quick link\Quick link\obj\Release\Quick_link.Zkill.resources
 C:\Users\Myth\source\repos\Quick link\Quick link\obj\Release\Quick link.csproj.GenerateResource.cache
 C:\Users\Myth\source\repos\Quick link\Quick link\obj\Release\Quick link.csproj.CoreCompileInputs.cache
-C:\Users\Myth\source\repos\Quick link\Quick link\obj\Release\Quick link.csproj.CopyComplete
 C:\Users\Myth\source\repos\Quick link\Quick link\obj\Release\Quick link.exe
 C:\Users\Myth\source\repos\Quick link\Quick link\obj\Release\Quick link.pdb
