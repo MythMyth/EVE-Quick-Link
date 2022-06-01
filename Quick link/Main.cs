@@ -184,6 +184,7 @@ namespace Quick_link
         }
         void ShowSuccees(string link)
         {
+            Log.GetInstance().DebugLog("ShowSuccess: " + link);
             DScan ds = new DScan();
             ds.SetLink(link);
             ds.Show();
