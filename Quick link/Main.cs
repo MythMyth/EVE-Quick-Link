@@ -137,7 +137,13 @@ namespace Quick_link
             Log.GetInstance().DebugLog(res);
             if(res_arr[0] == "OK") {
                 Clipboard.SetText(root_url + "/v/" + res_arr[1]);
-                ShowSuccees(root_url + "/v/" + res_arr[1]);
+                Log.GetInstance().DebugLog("Save to clip board");
+                DScan ds = new DScan();
+                Log.GetInstance().DebugLog("Init view");
+                ds.SetLink(root_url + "/v/" + res_arr[1]);
+                Log.GetInstance().DebugLog("Set link");
+                ds.Show();
+                Log.GetInstance().DebugLog("Show");
             } else
             {
                 Log.GetInstance().DebugLog("Get link failed");
@@ -186,9 +192,7 @@ namespace Quick_link
         void ShowSuccees(string link)
         {
             Log.GetInstance().DebugLog("ShowSuccess: " + link);
-            DScan ds = new DScan();
-            ds.SetLink(link);
-            ds.Show();
+            
             ToastContentBuilder builder = new ToastContentBuilder();
             builder.AddArgument("link", link);
             builder.AddText("Link accquired!");
