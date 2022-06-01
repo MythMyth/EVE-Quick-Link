@@ -12,7 +12,7 @@ namespace Quick_link
     {
         static Log instance;
         static Mutex m_mutex = new Mutex();
-
+        bool debug;
         public static Log GetInstance()
         {
             m_mutex.WaitOne();
@@ -25,11 +25,12 @@ namespace Quick_link
         }
         public Log()
         {
-            
+            debug = false;
         }
 
         public void DebugLog(string log)
         {
+            if (!debug) return;
             File.AppendAllText("log.txt", DateTime.Now.ToString() + ": " + log + "\n");
         }
     }
