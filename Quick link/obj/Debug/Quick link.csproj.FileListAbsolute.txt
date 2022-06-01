@@ -1,7 +1,6 @@
 C:\Users\Myth\source\repos\Quick link\Quick link\bin\Debug\Quick link.exe.config
 C:\Users\Myth\source\repos\Quick link\Quick link\bin\Debug\Quick link.exe
 C:\Users\Myth\source\repos\Quick link\Quick link\bin\Debug\Quick link.pdb
-C:\Users\Myth\source\repos\Quick link\Quick link\obj\Debug\Quick link.csproj.AssemblyReference.cache
 C:\Users\Myth\source\repos\Quick link\Quick link\obj\Debug\Quick_link.Properties.Resources.resources
 C:\Users\Myth\source\repos\Quick link\Quick link\obj\Debug\Quick link.csproj.GenerateResource.cache
 C:\Users\Myth\source\repos\Quick link\Quick link\obj\Debug\Quick link.csproj.CoreCompileInputs.cache
@@ -15,3 +14,4 @@ C:\Users\Myth\source\repos\Quick link\Quick link\obj\Debug\Quick_link.Zkill.reso
 C:\Users\Myth\source\repos\Quick link\Quick link\bin\Debug\HtmlAgilityPack.dll
 C:\Users\Myth\source\repos\Quick link\Quick link\bin\Debug\HtmlAgilityPack.pdb
 C:\Users\Myth\source\repos\Quick link\Quick link\obj\Debug\Quick_link.DScan.resources
+C:\Users\Myth\source\repos\Quick link\Quick link\obj\Debug\Quick link.csproj.CopyComplete
