@@ -55,12 +55,12 @@ namespace Quick_link
 
         private async Task GetLink(string content)
         {
-            //Log.GetInstance().DebugLog("Get link hit");
+            Log.GetInstance().DebugLog("Get link hit");
             mutex.WaitOne();
             WebClient client = new WebClient();
             string pageContent = client.DownloadString(root_url);
             int size = pageContent.Length;
-            //Log.GetInstance().DebugLog("Get content " + size + " bytes");
+            Log.GetInstance().DebugLog("Get content " + size + " bytes");
             int startOfForm = -1, endOfForm = -1;
             for(int i = 0; i < size; i++)
             {
@@ -73,7 +73,7 @@ namespace Quick_link
             if(startOfForm == -1)
             {
                 //Error
-                //Log.GetInstance().DebugLog("Not found <form");
+                Log.GetInstance().DebugLog("Not found <form");
                 mutex.ReleaseMutex();
                 return;
             }
@@ -87,7 +87,7 @@ namespace Quick_link
             if(endOfForm == -1)
             {
                 //Error
-                //Log.GetInstance().DebugLog("Not found end form");
+                Log.GetInstance().DebugLog("Not found end form");
                 mutex.ReleaseMutex();
                 return;
             }
@@ -119,7 +119,7 @@ namespace Quick_link
             if(action_end == -1 || action_start == -1)
             {
                 //Error
-                //Log.GetInstance().DebugLog("Action not found");
+                Log.GetInstance().DebugLog("Action not found");
                 mutex.ReleaseMutex();
                 return;
             }
@@ -139,7 +139,7 @@ namespace Quick_link
                 ShowSuccees(root_url + "/v/" + res_arr[1]);
             } else
             {
-                //Log.GetInstance().DebugLog("Get link failed");
+                Log.GetInstance().DebugLog("Get link failed");
             }
             mutex.ReleaseMutex();
         }
