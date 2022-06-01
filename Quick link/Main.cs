@@ -24,17 +24,11 @@ namespace Quick_link
         const string root_url = "https://dscan.info";
         const string get_char_id_url = "https://esi.evetech.net/latest/search/";
         private Mutex mutex;
-        private Mutex zmutex;
         const int GET_DSCAN = 1, GET_ZKILL = 2;
-        bool running;
-        bool zchecking;
         public Main()
         {
             InitializeComponent();
             mutex = new Mutex();
-            zmutex = new Mutex();
-            running = false;
-            zchecking = false;
             RegisterHotKey(this.Handle, GET_DSCAN, 6, (int)Keys.D);
             RegisterHotKey(this.Handle, GET_ZKILL, 6, (int)Keys.Z);
             MakeContextMenu();
@@ -61,14 +55,12 @@ namespace Quick_link
 
         private async Task GetLink(string content)
         {
-            Log.GetInstance().DebugLog("Get link hit");
-            if (running) return;
+            //Log.GetInstance().DebugLog("Get link hit");
             mutex.WaitOne();
-            running = true;
             WebClient client = new WebClient();
             string pageContent = client.DownloadString(root_url);
             int size = pageContent.Length;
-            Log.GetInstance().DebugLog("Get content " + size + " bytes");
+            //Log.GetInstance().DebugLog("Get content " + size + " bytes");
             int startOfForm = -1, endOfForm = -1;
             for(int i = 0; i < size; i++)
             {
@@ -81,8 +73,7 @@ namespace Quick_link
             if(startOfForm == -1)
             {
                 //Error
-                Log.GetInstance().DebugLog("Not found <form");
-                running = false;
+                //Log.GetInstance().DebugLog("Not found <form");
                 mutex.ReleaseMutex();
                 return;
             }
@@ -96,8 +87,7 @@ namespace Quick_link
             if(endOfForm == -1)
             {
                 //Error
-                Log.GetInstance().DebugLog("Not found end form");
-                running = false;
+                //Log.GetInstance().DebugLog("Not found end form");
                 mutex.ReleaseMutex();
                 return;
             }
@@ -129,8 +119,7 @@ namespace Quick_link
             if(action_end == -1 || action_start == -1)
             {
                 //Error
-                Log.GetInstance().DebugLog("Action not found");
-                running = false;
+                //Log.GetInstance().DebugLog("Action not found");
                 mutex.ReleaseMutex();
                 return;
             }
@@ -150,9 +139,8 @@ namespace Quick_link
                 ShowSuccees(root_url + "/v/" + res_arr[1]);
             } else
             {
-                Log.GetInstance().DebugLog("Get link failed");
+                //Log.GetInstance().DebugLog("Get link failed");
             }
-            running = false;
             mutex.ReleaseMutex();
         }
 

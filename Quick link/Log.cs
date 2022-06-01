@@ -11,8 +11,7 @@ namespace Quick_link
     class Log
     {
         static Log instance;
-        static Mutex m_mutex;
-        StreamWriter file;
+        static Mutex m_mutex = new Mutex();
 
         public static Log GetInstance()
         {
@@ -26,12 +25,12 @@ namespace Quick_link
         }
         public Log()
         {
-            file = new StreamWriter("log.txt", true);
+            
         }
 
         public void DebugLog(string log)
         {
-            file.WriteLine(DateTime.Now.ToString() + ": " + log);
+            File.AppendAllText("log.txt", DateTime.Now.ToString() + ": " + log + "\n");
         }
     }
 }
