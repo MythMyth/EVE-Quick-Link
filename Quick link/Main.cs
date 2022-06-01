@@ -134,6 +134,7 @@ namespace Quick_link
             var response = await http_client.PostAsync(query_link, request_content);
             string res = await response.Content.ReadAsStringAsync();
             string[] res_arr = res.Split(';');
+            Log.GetInstance().DebugLog(res);
             if(res_arr[0] == "OK") {
                 Clipboard.SetText(root_url + "/v/" + res_arr[1]);
                 ShowSuccees(root_url + "/v/" + res_arr[1]);
