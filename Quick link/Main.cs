@@ -1,9 +1,11 @@
 ﻿using Microsoft.Toolkit.Uwp.Notifications;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -25,6 +27,8 @@ namespace Quick_link
         const string get_char_id_url = "https://esi.evetech.net/latest/search/";
         private Mutex mutex;
         const int GET_DSCAN = 1, GET_ZKILL = 2;
+        private readonly string AppName = "EVE-Quick-Link";
+
         public Main()
         {
             InitializeComponent();
@@ -32,20 +36,70 @@ namespace Quick_link
             RegisterHotKey(this.Handle, GET_DSCAN, 6, (int)Keys.D);
             RegisterHotKey(this.Handle, GET_ZKILL, 6, (int)Keys.Z);
             MakeContextMenu();
-             WindowState = FormWindowState.Minimized;
-            Hide();
+            LoadConfig();
+            if (autoMinimizeCheckbox.Checked)
+            {
+                WindowState = FormWindowState.Minimized;
+                Hide();
+            }
         }
 
         void MakeContextMenu()
         {
             MenuItem exit = new MenuItem();
             exit.Text = "Exit";
-            exit.Index = 0;
+            exit.Index = 1;
             exit.Click += new EventHandler(this.exit_click);
 
+            MenuItem setting = new MenuItem();
+            setting.Text = "Setting";
+            setting.Index = 0;
+            setting.Click += new EventHandler(this.show_form);
+
             ContextMenu menu = new ContextMenu();
+            menu.MenuItems.Add(setting);
             menu.MenuItems.Add(exit);
             notifyIcon1.ContextMenu = menu;
+        }
+
+        void LoadConfig()
+        {
+            FileStream fs = File.Open("config", FileMode.OpenOrCreate);
+            StreamReader reader = new StreamReader(fs);
+            string line = reader.ReadLine();
+            reader.Close();
+            fs.Close();
+            if(line == null)
+            {
+                autoMinimizeCheckbox.Checked = false;
+                fs = File.OpenWrite("config");
+                StreamWriter writer = new StreamWriter(fs);
+                writer.WriteLine("false");
+                writer.Close();
+                fs.Close();
+            } else if(line == "false")
+            {
+                autoMinimizeCheckbox.Checked = false;
+            } else
+            {
+                autoMinimizeCheckbox.Checked = true;
+            }
+
+            RegistryKey rk = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
+            if(rk.GetValueNames().Contains(AppName))
+            {
+                startUpCheckbox.Checked = true;
+            } else
+            {
+                startUpCheckbox.Checked = false;
+            }
+            rk.Close();
+        }
+
+        void show_form(object sender, EventArgs arg)
+        {
+            Show();
+            WindowState = FormWindowState.Normal;
         }
 
         void exit_click(object sender, EventArgs arg)
@@ -140,7 +194,6 @@ namespace Quick_link
                 DScan ds = new DScan();
                 ds.SetLink(root_url + "/v/" + res_arr[1]);
                 ds.Show();
-                ShowSuccees(root_url + "/v/" + res_arr[1]);
             } else
             {
                 Log.GetInstance().DebugLog("Get link failed");
@@ -182,24 +235,6 @@ namespace Quick_link
             {
                 //Request failed
             }
-
-            
-
-        }
-        void ShowSuccees(string link)
-        {
-            try
-            {
-                ToastContentBuilder builder = new ToastContentBuilder();
-                builder.AddArgument("link", link);
-                builder.AddText("Link accquired!");
-                builder.AddText(link);
-                builder.Show();
-            }
-            catch(Exception e)
-            {
-                Log.GetInstance().DebugLog("Exception: " + e.ToString());
-            }
         }
 
         protected override void WndProc(ref Message m)
@@ -210,6 +245,33 @@ namespace Quick_link
                 else if(m.WParam.ToInt32() == GET_ZKILL) GetZkill(Clipboard.GetText());
             }
             base.WndProc(ref m);
+        }
+
+        private void startUpCheckbox_CheckedChanged(object sender, EventArgs e)
+        {
+            RegistryKey rk = Registry.CurrentUser.OpenSubKey ("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
+
+            if (startUpCheckbox.Checked)
+                rk.SetValue(AppName, Application.ExecutablePath);
+            else
+                rk.DeleteValue(AppName, false);
+
+            rk.Close();
+        }
+
+        private void autoMinimizeCheckbox_CheckedChanged(object sender, EventArgs e)
+        {
+            FileStream fs = File.Open("config", FileMode.Truncate);
+            StreamWriter sw = new StreamWriter(fs);
+            if (autoMinimizeCheckbox.Checked)
+            {
+                sw.WriteLine("true");
+            } else
+            {
+                sw.WriteLine("false");
+            }
+            sw.Close();
+            fs.Close(); 
         }
 
         private void Main_Resize(object sender, EventArgs e)

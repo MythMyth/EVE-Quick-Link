@@ -15,3 +15,22 @@ C:\Users\Myth\source\repos\Quick link\Quick link\obj\Release\Quick link.csproj.G
 C:\Users\Myth\source\repos\Quick link\Quick link\obj\Release\Quick link.csproj.CoreCompileInputs.cache
 C:\Users\Myth\source\repos\Quick link\Quick link\obj\Release\Quick link.exe
 C:\Users\Myth\source\repos\Quick link\Quick link\obj\Release\Quick link.pdb
+C:\Users\ADMIN\source\repos\EVE-Quick-Link\Quick link\bin\Release\Quick link.exe.config
+C:\Users\ADMIN\source\repos\EVE-Quick-Link\Quick link\bin\Release\Quick link.exe
+C:\Users\ADMIN\source\repos\EVE-Quick-Link\Quick link\bin\Release\Quick link.pdb
+C:\Users\ADMIN\source\repos\EVE-Quick-Link\Quick link\bin\Release\HtmlAgilityPack.dll
+C:\Users\ADMIN\source\repos\EVE-Quick-Link\Quick link\bin\Release\HtmlAgilityPack.pdb
+C:\Users\ADMIN\source\repos\EVE-Quick-Link\Quick link\bin\Release\Microsoft.Toolkit.Uwp.Notifications.dll
+C:\Users\ADMIN\source\repos\EVE-Quick-Link\Quick link\bin\Release\Microsoft.Toolkit.Uwp.Notifications.pdb
+C:\Users\ADMIN\source\repos\EVE-Quick-Link\Quick link\bin\Release\System.ValueTuple.dll
+C:\Users\ADMIN\source\repos\EVE-Quick-Link\Quick link\obj\Release\Quick link.csproj.AssemblyReference.cache
+C:\Users\ADMIN\source\repos\EVE-Quick-Link\Quick link\obj\Release\Quick link.csproj.SuggestedBindingRedirects.cache
+C:\Users\ADMIN\source\repos\EVE-Quick-Link\Quick link\obj\Release\Quick_link.DScan.resources
+C:\Users\ADMIN\source\repos\EVE-Quick-Link\Quick link\obj\Release\Quick_link.Main.resources
+C:\Users\ADMIN\source\repos\EVE-Quick-Link\Quick link\obj\Release\Quick_link.Properties.Resources.resources
+C:\Users\ADMIN\source\repos\EVE-Quick-Link\Quick link\obj\Release\Quick_link.Zkill.resources
+C:\Users\ADMIN\source\repos\EVE-Quick-Link\Quick link\obj\Release\Quick link.csproj.GenerateResource.cache
+C:\Users\ADMIN\source\repos\EVE-Quick-Link\Quick link\obj\Release\Quick link.csproj.CoreCompileInputs.cache
+C:\Users\ADMIN\source\repos\EVE-Quick-Link\Quick link\obj\Release\Quick link.csproj.CopyComplete
+C:\Users\ADMIN\source\repos\EVE-Quick-Link\Quick link\obj\Release\Quick link.exe
+C:\Users\ADMIN\source\repos\EVE-Quick-Link\Quick link\obj\Release\Quick link.pdb

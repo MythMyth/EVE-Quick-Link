@@ -37,7 +37,7 @@ namespace Quick_link
             // 
             this.zkilllink.AutoSize = true;
             this.zkilllink.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.zkilllink.Location = new System.Drawing.Point(13, 13);
+            this.zkilllink.Location = new System.Drawing.Point(12, 9);
             this.zkilllink.Name = "zkilllink";
             this.zkilllink.Size = new System.Drawing.Size(73, 18);
             this.zkilllink.TabIndex = 0;
@@ -53,11 +53,11 @@ namespace Quick_link
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.webbrowse.IsWebBrowserContextMenuEnabled = false;
-            this.webbrowse.Location = new System.Drawing.Point(16, 40);
+            this.webbrowse.Location = new System.Drawing.Point(3, 3);
             this.webbrowse.MinimumSize = new System.Drawing.Size(20, 20);
             this.webbrowse.Name = "webbrowse";
             this.webbrowse.ScriptErrorsSuppressed = true;
-            this.webbrowse.Size = new System.Drawing.Size(1230, 705);
+            this.webbrowse.Size = new System.Drawing.Size(1257, 756);
             this.webbrowse.TabIndex = 3;
             this.webbrowse.WebBrowserShortcutsEnabled = false;
             this.webbrowse.DocumentCompleted += new System.Windows.Forms.WebBrowserDocumentCompletedEventHandler(this.webbrowse_DocumentCompleted);
@@ -67,8 +67,8 @@ namespace Quick_link
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1264, 761);
-            this.Controls.Add(this.webbrowse);
             this.Controls.Add(this.zkilllink);
+            this.Controls.Add(this.webbrowse);
             this.Name = "Zkill";
             this.Text = "Zkill";
             this.TopMost = true;

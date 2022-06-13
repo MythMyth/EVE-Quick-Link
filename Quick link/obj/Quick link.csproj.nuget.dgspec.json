@@ -1,21 +1,21 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Myth\\source\\repos\\Quick link\\Quick link\\Quick link.csproj": {}
+    "C:\\Users\\ADMIN\\source\\repos\\EVE-Quick-Link\\Quick link\\Quick link.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Myth\\source\\repos\\Quick link\\Quick link\\Quick link.csproj": {
+    "C:\\Users\\ADMIN\\source\\repos\\EVE-Quick-Link\\Quick link\\Quick link.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Myth\\source\\repos\\Quick link\\Quick link\\Quick link.csproj",
+        "projectUniqueName": "C:\\Users\\ADMIN\\source\\repos\\EVE-Quick-Link\\Quick link\\Quick link.csproj",
         "projectName": "Quick link",
-        "projectPath": "C:\\Users\\Myth\\source\\repos\\Quick link\\Quick link\\Quick link.csproj",
-        "packagesPath": "C:\\Users\\Myth\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Myth\\source\\repos\\Quick link\\Quick link\\obj\\",
+        "projectPath": "C:\\Users\\ADMIN\\source\\repos\\EVE-Quick-Link\\Quick link\\Quick link.csproj",
+        "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\ADMIN\\source\\repos\\EVE-Quick-Link\\Quick link\\obj\\",
         "projectStyle": "PackageReference",
         "skipContentFileWrite": true,
         "configFilePaths": [
-          "C:\\Users\\Myth\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\ADMIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [

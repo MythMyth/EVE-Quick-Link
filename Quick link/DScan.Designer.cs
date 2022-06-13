@@ -50,10 +50,10 @@ namespace Quick_link
             this.webBrowser.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.webBrowser.Location = new System.Drawing.Point(16, 45);
+            this.webBrowser.Location = new System.Drawing.Point(1, 2);
             this.webBrowser.MinimumSize = new System.Drawing.Size(20, 20);
             this.webBrowser.Name = "webBrowser";
-            this.webBrowser.Size = new System.Drawing.Size(676, 544);
+            this.webBrowser.Size = new System.Drawing.Size(701, 600);
             this.webBrowser.TabIndex = 1;
             // 
             // DScan
@@ -61,8 +61,8 @@ namespace Quick_link
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(704, 601);
-            this.Controls.Add(this.webBrowser);
             this.Controls.Add(this.linkLabel1);
+            this.Controls.Add(this.webBrowser);
             this.Name = "DScan";
             this.Text = "DScan";
             this.ResumeLayout(false);
