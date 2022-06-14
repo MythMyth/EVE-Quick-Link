@@ -69,6 +69,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Debug.cs" />
     <Compile Include="DScan.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -76,7 +77,6 @@
       <DependentUpon>DScan.cs</DependentUpon>
     </Compile>
     <Compile Include="ListItem.cs" />
-    <Compile Include="Log.cs" />
     <Compile Include="Main.cs">
       <SubType>Form</SubType>
     </Compile>

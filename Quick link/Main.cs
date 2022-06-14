@@ -28,10 +28,12 @@ namespace Quick_link
         private Mutex mutex;
         const int GET_DSCAN = 1, GET_ZKILL = 2;
         private readonly string AppName = "EVE-Quick-Link";
-
+        string exe_dir;
         public Main()
         {
             InitializeComponent();
+            exe_dir = Application.ExecutablePath;
+            exe_dir = exe_dir.Substring(0, exe_dir.LastIndexOf("\\"));
             mutex = new Mutex();
             RegisterHotKey(this.Handle, GET_DSCAN, 6, (int)Keys.D);
             RegisterHotKey(this.Handle, GET_ZKILL, 6, (int)Keys.Z);
@@ -64,36 +66,48 @@ namespace Quick_link
 
         void LoadConfig()
         {
-            FileStream fs = File.Open("config", FileMode.OpenOrCreate);
-            StreamReader reader = new StreamReader(fs);
-            string line = reader.ReadLine();
-            reader.Close();
-            fs.Close();
-            if(line == null)
+            try
             {
-                autoMinimizeCheckbox.Checked = false;
-                fs = File.OpenWrite("config");
-                StreamWriter writer = new StreamWriter(fs);
-                writer.WriteLine("false");
-                writer.Close();
+                FileStream fs = File.Open(exe_dir + "\\config", FileMode.OpenOrCreate);
+                StreamReader reader = new StreamReader(fs);
+                string line = reader.ReadLine();
+                reader.Close();
                 fs.Close();
-            } else if(line == "false")
-            {
-                autoMinimizeCheckbox.Checked = false;
-            } else
-            {
-                autoMinimizeCheckbox.Checked = true;
-            }
+                if (line == null)
+                {
+                    autoMinimizeCheckbox.Checked = false;
+                    fs = File.OpenWrite(exe_dir + "\\config");
+                    StreamWriter writer = new StreamWriter(fs);
+                    writer.WriteLine("false");
+                    writer.Close();
+                    fs.Close();
+                }
+                else if (line == "false")
+                {
+                    autoMinimizeCheckbox.Checked = false;
+                }
+                else
+                {
+                    autoMinimizeCheckbox.Checked = true;
+                }
 
-            RegistryKey rk = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
-            if(rk.GetValueNames().Contains(AppName))
+                RegistryKey rk = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
+                if (rk.GetValueNames().Contains(AppName))
+                {
+                    startUpCheckbox.Checked = true;
+                }
+                else
+                {
+                    startUpCheckbox.Checked = false;
+                }
+                rk.Close();
+            } 
+            catch(Exception e)
             {
-                startUpCheckbox.Checked = true;
-            } else
-            {
-                startUpCheckbox.Checked = false;
+                Debug.Log("Load config: " + e.Message);
+                label1.Text = e.Message;
             }
-            rk.Close();
+            
         }
 
         void show_form(object sender, EventArgs arg)
@@ -109,132 +123,139 @@ namespace Quick_link
 
         private async Task GetLink(string content)
         {
-            Log.GetInstance().DebugLog("Get link hit");
             mutex.WaitOne();
-            WebClient client = new WebClient();
-            string pageContent = client.DownloadString(root_url);
-            int size = pageContent.Length;
-            Log.GetInstance().DebugLog("Get content " + size + " bytes");
-            int startOfForm = -1, endOfForm = -1;
-            for(int i = 0; i < size; i++)
+            try
             {
-                if("<form" == pageContent.Substring(i, 5))
+                WebClient client = new WebClient();
+                string pageContent = client.DownloadString(root_url);
+                int size = pageContent.Length;
+                int startOfForm = -1, endOfForm = -1;
+                for (int i = 0; i < size; i++)
                 {
-                    startOfForm = i;
-                    break;
-                }
-            }
-            if(startOfForm == -1)
-            {
-                //Error
-                Log.GetInstance().DebugLog("Not found <form");
-                mutex.ReleaseMutex();
-                return;
-            }
-            for(int i = startOfForm; i < size; i++)
-            {
-                if(pageContent[i] == '>')
-                {
-                    endOfForm = i;
-                }
-            }
-            if(endOfForm == -1)
-            {
-                //Error
-                Log.GetInstance().DebugLog("Not found end form");
-                mutex.ReleaseMutex();
-                return;
-            }
-            int action_start = -1, action_end = -1;
-            for(int i = startOfForm; i < endOfForm; i++)
-            {
-                if ("action=" == pageContent.Substring(i, 7))
-                {
-                    for(;i < endOfForm; i++)
+                    if ("<form" == pageContent.Substring(i, 5))
                     {
-                        if (pageContent[i] == '"')
-                        {
-                            i++;
-                            action_start = i;
-                            break;
-                        }
+                        startOfForm = i;
+                        break;
                     }
-                    for(;i < endOfForm; i++)
-                    {
-                        if(pageContent[i] == '"')
-                        {
-                            action_end = i;
-                            break;
-                        }
-                    }
-                    break;
                 }
-            }
-            if(action_end == -1 || action_start == -1)
-            {
-                //Error
-                Log.GetInstance().DebugLog("Action not found");
-                mutex.ReleaseMutex();
-                return;
-            }
+                if (startOfForm == -1)
+                {
+                    mutex.ReleaseMutex();
+                    return;
+                }
+                for (int i = startOfForm; i < size; i++)
+                {
+                    if (pageContent[i] == '>')
+                    {
+                        endOfForm = i;
+                    }
+                }
+                if (endOfForm == -1)
+                {
+                    mutex.ReleaseMutex();
+                    return;
+                }
+                int action_start = -1, action_end = -1;
+                for (int i = startOfForm; i < endOfForm; i++)
+                {
+                    if ("action=" == pageContent.Substring(i, 7))
+                    {
+                        for (; i < endOfForm; i++)
+                        {
+                            if (pageContent[i] == '"')
+                            {
+                                i++;
+                                action_start = i;
+                                break;
+                            }
+                        }
+                        for (; i < endOfForm; i++)
+                        {
+                            if (pageContent[i] == '"')
+                            {
+                                action_end = i;
+                                break;
+                            }
+                        }
+                        break;
+                    }
+                }
+                if (action_end == -1 || action_start == -1)
+                {
+                    mutex.ReleaseMutex();
+                    return;
+                }
 
-            HttpClient http_client = new HttpClient();
-            string query_link = root_url + pageContent.Substring(action_start, action_end - action_start);
-            var data = new Dictionary<string, string> {
+                HttpClient http_client = new HttpClient();
+                string query_link = root_url + pageContent.Substring(action_start, action_end - action_start);
+                var data = new Dictionary<string, string> {
                 { "paste", content}
             };
 
-            var request_content = new System.Net.Http.FormUrlEncodedContent(data);
-            var response = await http_client.PostAsync(query_link, request_content);
-            string res = await response.Content.ReadAsStringAsync();
-            string[] res_arr = res.Split(';');
-            Log.GetInstance().DebugLog(res);
-            if(res_arr[0] == "OK") {
-                Clipboard.SetText(root_url + "/v/" + res_arr[1]);
-                DScan ds = new DScan();
-                ds.SetLink(root_url + "/v/" + res_arr[1]);
-                ds.Show();
-            } else
-            {
-                Log.GetInstance().DebugLog("Get link failed");
+                var request_content = new System.Net.Http.FormUrlEncodedContent(data);
+                var response = await http_client.PostAsync(query_link, request_content);
+                string res = await response.Content.ReadAsStringAsync();
+                string[] res_arr = res.Split(';');
+                if (res_arr[0] == "OK")
+                {
+                    Clipboard.SetText(root_url + "/v/" + res_arr[1]);
+                    DScan ds = new DScan();
+                    ds.SetLink(root_url + "/v/" + res_arr[1]);
+                    ds.Show();
+                }
+                mutex.ReleaseMutex();
             }
-            mutex.ReleaseMutex();
+            catch(Exception e)
+            {
+                mutex.ReleaseMutex();
+                Debug.Log("Get link: " + e.Message);
+            }
+            
         }
 
         private async Task GetZkill(string charname)
         {
-            HttpClient http_client = new HttpClient();
-            string request_url = get_char_id_url + "?";
-            request_url += "categories=character&";
-            request_url += "datasource=tranquility&";
-            request_url += "language=en&";
-            request_url += "search=" + charname.Trim().Replace(" ", "%20") + "&";
-            request_url += "strict=true";
-
-            HttpResponseMessage response = await http_client.GetAsync(request_url);
-
-            if (response.StatusCode == HttpStatusCode.OK)
+            try
             {
-                string result = await response.Content.ReadAsStringAsync();
-                result = result.Replace("{", "").Replace("}", "").Replace("]", "");
-                if(result.Split('[').Length < 2)
-                {
-                    //Not found
-                } else
-                {
-                    result = result.Split('[')[1].Trim();
-                    //System.Diagnostics.Process.Start("https://zkillboard.com/character/" + result);
+                HttpClient http_client = new HttpClient();
+                string request_url = get_char_id_url + "?";
+                request_url += "categories=character&";
+                request_url += "datasource=tranquility&";
+                request_url += "language=en&";
+                request_url += "search=" + charname.Trim().Replace(" ", "%20") + "&";
+                request_url += "strict=true";
 
-                    
-                    Zkill zkill = new Zkill();
-                    zkill.SetCharId(charname, result);
-                    zkill.Show();
+                HttpResponseMessage response = await http_client.GetAsync(request_url);
+
+                if (response.StatusCode == HttpStatusCode.OK)
+                {
+                    string result = await response.Content.ReadAsStringAsync();
+                    result = result.Replace("{", "").Replace("}", "").Replace("]", "");
+                    if (result.Split('[').Length < 2)
+                    {
+                        //Not found
+                    }
+                    else
+                    {
+                        result = result.Split('[')[1].Trim();
+                        //System.Diagnostics.Process.Start("https://zkillboard.com/character/" + result);
+
+
+                        Zkill zkill = new Zkill();
+                        zkill.SetCharId(charname, result);
+                        zkill.Show();
+                    }
+
                 }
-
-            } else
+                else
+                {
+                    //Request failed
+                }
+            } catch (Exception e)
             {
-                //Request failed
+                Debug.Log("Get zkill: " + e.Message);
             }
+            
         }
 
         protected override void WndProc(ref Message m)
@@ -249,29 +270,50 @@ namespace Quick_link
 
         private void startUpCheckbox_CheckedChanged(object sender, EventArgs e)
         {
-            RegistryKey rk = Registry.CurrentUser.OpenSubKey ("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
+            try
+            {
+                RegistryKey rk = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
 
-            if (startUpCheckbox.Checked)
-                rk.SetValue(AppName, Application.ExecutablePath);
-            else
-                rk.DeleteValue(AppName, false);
+                if (startUpCheckbox.Checked)
+                    rk.SetValue(AppName, exe_dir);
+                else
+                    rk.DeleteValue(AppName, false);
 
-            rk.Close();
+                rk.Close();
+            }
+            catch(Exception ex)
+            {
+                Debug.Log("Start check change: " + ex.Message);
+            }
         }
 
         private void autoMinimizeCheckbox_CheckedChanged(object sender, EventArgs e)
         {
-            FileStream fs = File.Open("config", FileMode.Truncate);
-            StreamWriter sw = new StreamWriter(fs);
-            if (autoMinimizeCheckbox.Checked)
+            try
             {
-                sw.WriteLine("true");
-            } else
-            {
-                sw.WriteLine("false");
+                FileStream fs = File.Open(exe_dir + "\\config", FileMode.Truncate);
+                StreamWriter sw = new StreamWriter(fs);
+                if (autoMinimizeCheckbox.Checked)
+                {
+                    sw.WriteLine("true");
+                }
+                else
+                {
+                    sw.WriteLine("false");
+                }
+                sw.Close();
+                fs.Close();
             }
-            sw.Close();
-            fs.Close(); 
+            catch(Exception ex)
+            {
+                Debug.Log("Auto minimize check change: " + ex.Message);
+            }
+            
+        }
+
+        private void notifyIcon1_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            show_form(sender, e);
         }
 
         private void Main_Resize(object sender, EventArgs e)
